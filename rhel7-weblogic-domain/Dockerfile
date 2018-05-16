@@ -45,9 +45,10 @@ ENV DOMAIN_NAME="${DOMAIN_NAME:-base_domain}" \
 
 # Add files required to build this image
 USER oracle
+RUN ls /u01/oracle
 COPY container-scripts/* /u01/oracle/
 
-RUN find / -name wlst
+RUN find / -name wlst && ls /u01 && ls -l /u01/oracle
 
 # Configuration of WLS Domain
 RUN export ADMIN_PASSWORD=$(if [ -z "$ADMIN_PASSWORD" ]; then dd if=/dev/urandom bs=15 count=1 2>/dev/null | base64 -w 0; else echo "$ADMIN_PASSWORD"; fi) && \
