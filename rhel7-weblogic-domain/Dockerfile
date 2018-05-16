@@ -47,6 +47,8 @@ ENV DOMAIN_NAME="${DOMAIN_NAME:-base_domain}" \
 USER oracle
 COPY container-scripts/* /u01/oracle/
 
+RUN find / -name wlst
+
 # Configuration of WLS Domain
 RUN export ADMIN_PASSWORD=$(if [ -z "$ADMIN_PASSWORD" ]; then dd if=/dev/urandom bs=15 count=1 2>/dev/null | base64 -w 0; else echo "$ADMIN_PASSWORD"; fi) && \
     /u01/oracle/wlst /u01/oracle/create-wls-domain.py && \
